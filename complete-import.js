@@ -1,13 +1,15 @@
-const sqlite3 = require('sqlite3').verbose();
+const database = require('./database');
 
-// Create database connection
-const db = new sqlite3.Database('./housing_contacts.db', (err) => {
-  if (err) {
-    console.error('Error opening database:', err);
-    return;
+// Initialize database connection
+async function initDatabase() {
+  try {
+    await database.initDB();
+    console.log('Database initialized for complete import');
+  } catch (err) {
+    console.error('Error initializing database:', err);
+    throw err;
   }
-  console.log('Connected to SQLite database for complete import');
-});
+}
 
 // All 71 contacts from your Excel data
 const allContacts = [
@@ -1086,17 +1088,22 @@ const allContacts = [
   }
 ];
 
-// Function to clear existing data and import all contacts
-function completeImport() {
-  // First, clear existing data
-  db.run('DELETE FROM housing_contacts', (err) => {
-    if (err) {
-      console.error('Error clearing existing data:', err);
+// Function to import all contacts
+async function completeImport() {
+  try {
+    await initDatabase();
+    
+    // Check if data already exists
+    const existingContacts = await database.query('SELECT COUNT(*) as count FROM housing_contacts');
+    const count = database.isPostgres() ? parseInt(existingContacts[0].count) : existingContacts[0].count;
+    
+    if (count > 0) {
+      console.log(`⚠️  Database already has ${count} contacts. Skipping import to avoid duplicates.`);
       return;
     }
-    console.log('Cleared existing data');
     
-    // Then insert all contacts
+    console.log('📥 Importing all housing contacts...');
+    
     const fields = [
       'date_entered', 'unit_name', 'count1', 'managed_by', 'address_office_hours',
       'count2', 'city', 'contact', 'phone_no', 'email', 'bedrooms', 'bathrooms',
@@ -1107,33 +1114,45 @@ function completeImport() {
       'raise_rent_yearly'
     ];
     
-    const placeholders = fields.map(() => '?').join(', ');
-    const query = `INSERT INTO housing_contacts (${fields.join(', ')}) VALUES (${placeholders})`;
+    let placeholders;
+    if (database.isPostgres()) {
+      placeholders = fields.map((_, i) => `$${i + 1}`).join(', ');
+    } else {
+      placeholders = fields.map(() => '?').join(', ');
+    }
+    
+    const insertSQL = `INSERT INTO housing_contacts (${fields.join(', ')}) VALUES (${placeholders})`;
     
     let insertedCount = 0;
     let errors = 0;
     
-    allContacts.forEach((contact, index) => {
-      const values = fields.map(field => contact[field] || null);
-      
-      db.run(query, values, function(err) {
-        if (err) {
-          console.error(`Error inserting contact ${index + 1} (${contact.unit_name}):`, err);
-          errors++;
-        } else {
-          insertedCount++;
-          console.log(`✓ Inserted: ${contact.unit_name}`);
-        }
-        
-        // Close database after all insertions are complete
-        if (insertedCount + errors === allContacts.length) {
-          console.log(`\n🎉 Complete import finished: ${insertedCount} contacts inserted, ${errors} errors`);
-          db.close();
-        }
-      });
-    });
-  });
+    for (const contact of allContacts) {
+      try {
+        const values = fields.map(field => contact[field] || null);
+        await database.query(insertSQL, values);
+        insertedCount++;
+        console.log(`✓ Inserted: ${contact.unit_name}`);
+      } catch (err) {
+        console.error(`❌ Error inserting ${contact.unit_name}:`, err);
+        errors++;
+      }
+    }
+    
+    console.log(`\n🎉 Complete import finished: ${insertedCount} contacts inserted, ${errors} errors`);
+    
+  } catch (error) {
+    console.error('💥 Import failed:', error);
+    process.exit(1);
+  }
 }
 
-console.log(`🚀 Starting complete import of ${allContacts.length} contacts...`);
-completeImport();
+async function main() {
+  console.log(`🚀 Starting complete import of ${allContacts.length} contacts...`);
+  await completeImport();
+  process.exit(0);
+}
+
+// Run if called directly
+if (require.main === module) {
+  main();
+}

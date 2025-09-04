@@ -7,7 +7,7 @@
     "start": "node server.js",
     "import": "node import-data.js",
     "build": "echo 'No build step required'",
-    "postinstall": "node import-production.js",
+    "postinstall": "node complete-import.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
