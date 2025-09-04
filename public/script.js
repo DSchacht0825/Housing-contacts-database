@@ -1,5 +1,5 @@
-// API base URL
-const API_URL = 'http://localhost:3005/api';
+// API base URL - works for both local and Railway deployment
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3005/api' : '/api';
 
 // Load dropdown options when page loads
 document.addEventListener('DOMContentLoaded', () => {
