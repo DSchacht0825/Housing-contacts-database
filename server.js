@@ -65,7 +65,98 @@ function initDatabase() {
       console.error('Error creating table:', err);
     } else {
       console.log('Housing contacts table ready');
+      // Check if data exists, if not import sample data
+      checkAndImportData();
     }
+  });
+}
+
+// Check if data exists and import if empty
+function checkAndImportData() {
+  db.get('SELECT COUNT(*) as count FROM housing_contacts', (err, row) => {
+    if (err) {
+      console.error('Error checking data count:', err);
+      return;
+    }
+    
+    if (row.count === 0) {
+      console.log('No data found, importing sample data...');
+      importSampleData();
+    } else {
+      console.log(`Database already has ${row.count} contacts`);
+    }
+  });
+}
+
+// Import sample data function
+function importSampleData() {
+  const sampleContacts = [
+    {
+      date_entered: '2025-08-04',
+      unit_name: 'Santa Fe Senior Village',
+      managed_by: 'National CORE',
+      address_office_hours: '414 N. Santa Fe Avenue',
+      city: 'Vista',
+      notes: 'Waitlist Opens Aug. 29th @7:30 am 62 years + fully furnished.'
+    },
+    {
+      date_entered: '2025-08-05',
+      unit_name: 'Bella Terra Apartments',
+      managed_by: 'Greystar',
+      address_office_hours: '365 Pomelo Drive',
+      city: 'Vista',
+      contact: 'Megan Schratwieser',
+      phone_no: '760-945-1200',
+      email: 'bellaterra@greystar.com',
+      bedrooms: '1-3 bedrooms',
+      deposit: '$500 up to 1 month rent',
+      notes: '8/5 spoke with manager and is open with partnering with San Diego Rescue Mission.'
+    },
+    {
+      date_entered: '2025-08-14',
+      unit_name: 'Marlow Palomar Heights',
+      managed_by: 'Greystar',
+      address_office_hours: '101 Chamomile Glenn (10-6)',
+      city: 'Escondido',
+      contact: 'Becca Cook',
+      phone_no: '442-775-5055',
+      bedrooms: '1-3 bedrooms',
+      rent: 'Starting $2,500(1 bd) $2875 (2bd) $3420-4025',
+      status: 'Contacted',
+      notes: 'Accepts vouchers, new units, a lot of inventory. Met with Becca.'
+    }
+  ];
+
+  const fields = [
+    'date_entered', 'unit_name', 'count1', 'managed_by', 'address_office_hours',
+    'count2', 'city', 'contact', 'phone_no', 'email', 'bedrooms', 'bathrooms',
+    'rent', 'deposit', 'utilities_included', 'cost_if_not_included',
+    'move_in_specials', 'availability_date', 'requirements', 'credit_score',
+    'background_check', 'accepts_programs', 'pet_policy', 'rental_insurance',
+    'application_fee', 'website_link', 'notes', 'follow_up', 'status',
+    'raise_rent_yearly'
+  ];
+
+  const placeholders = fields.map(() => '?').join(', ');
+  const query = `INSERT INTO housing_contacts (${fields.join(', ')}) VALUES (${placeholders})`;
+
+  let insertedCount = 0;
+  
+  sampleContacts.forEach((contact) => {
+    const values = fields.map(field => contact[field] || null);
+    
+    db.run(query, values, function(err) {
+      if (err) {
+        console.error('Error inserting sample contact:', err);
+      } else {
+        insertedCount++;
+        console.log(`✓ Imported: ${contact.unit_name}`);
+        
+        if (insertedCount === sampleContacts.length) {
+          console.log(`✅ Successfully imported ${insertedCount} sample contacts`);
+        }
+      }
+    });
   });
 }
 
