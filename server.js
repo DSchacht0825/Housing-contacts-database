@@ -166,14 +166,23 @@ app.delete('/api/contacts/:id', (req, res) => {
 // Get dropdown options
 app.get('/api/options', (req, res) => {
   const options = {
-    cities: ['Vista', 'San Marcos', 'Escondido', 'Carlsbad', 'Oceanside', 'San Diego', 'Fallbrook', 'La Mesa'],
-    utilities_included: ['Yes', 'No', 'Partial'],
-    background_check: ['Yes', 'No', 'Case by Case'],
-    accepts_programs: ['Yes', 'No', 'Some'],
-    status: ['Contacted', 'Waiting', 'Not Available', 'Approved', 'Denied', 'Follow Up'],
-    raise_rent_yearly: ['Yes', 'No', 'Unknown'],
-    bedrooms: ['Studio', '1 bedroom', '2 bedrooms', '3 bedrooms', '4 bedrooms', '1-2 bedrooms', '2-3 bedrooms', '1-3 bedrooms', 'Varies'],
-    bathrooms: ['1', '1.5', '2', '2.5', '3', '1-2', 'Varies']
+    cities: [
+      'Bonita', 'Bonsall', 'Borrego Springs', 'Carlsbad', 'Chula Vista', 
+      'Coronado', 'Del Mar', 'Descanso', 'El Cajon', 'Encinitas', 
+      'Escondido', 'Fallbrook', 'Imperial Beach', 'Julian', 'La Jolla', 
+      'La Mesa', 'Lakeside', 'Lemon Grove', 'National City', 'Oceanside', 
+      'Pala', 'Pauma Valley', 'Poway', 'Ramona', 'Rancho Bernardo', 
+      'Rancho Penasquitos', 'Rancho Santa Fe', 'San Diego', 'San Marcos', 
+      'Santee', 'Solana Beach', 'Spring Valley', 'Valley Center', 
+      'Vista', 'Other'
+    ],
+    utilities_included: ['Yes', 'No', 'Partial', 'Electric only', 'Water/Sewer only', 'Gas only', 'Other'],
+    background_check: ['Yes', 'No', 'Case by Case', 'Conditional', 'Not specified'],
+    accepts_programs: ['Yes', 'No', 'Some programs', 'Section 8', 'VASH', 'RRH only', 'Case by case', 'Not specified'],
+    status: ['New lead', 'Contacted', 'Waiting for callback', 'Application submitted', 'Approved', 'Denied', 'Not available', 'Waitlisted', 'Follow up needed', 'No longer interested'],
+    raise_rent_yearly: ['Yes', 'No', 'Market rate', 'Fixed increases', 'Unknown', 'Varies'],
+    bedrooms: ['Studio', '1 bedroom', '2 bedrooms', '3 bedrooms', '4+ bedrooms', '1-2 bedrooms', '2-3 bedrooms', '1-3 bedrooms', 'Studio-1 bedroom', 'Studio-2 bedrooms', 'Varies'],
+    bathrooms: ['1', '1.5', '2', '2.5', '3', '3+', '1-2', '1.5-2.5', 'Varies']
   };
   res.json(options);
 });
