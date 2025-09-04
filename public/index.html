@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housing Contacts Database - San Diego Rescue Mission</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://www.sdrescue.org/wp-content/uploads/2021/06/SDRMLogo2016.svg" alt="San Diego Rescue Mission" class="logo">
+            <h1>Housing Contacts Management System</h1>
+            <p class="tagline">San Diego Rescue Mission - Addressing San Diego's #1 Issue</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('form')">Add/Edit Contact</button>
+            <button class="tab-button" onclick="showTab('list')">View Contacts</button>
+            <button class="tab-button" onclick="showTab('import')">Import Data</button>
+        </div>
+
+        <!-- Form Tab -->
+        <div id="form-tab" class="tab-content active">
+            <h2>Add/Edit Housing Contact</h2>
+            <form id="contact-form">
+                <input type="hidden" id="contact-id">
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="date_entered">Date Entered *</label>
+                        <input type="date" id="date_entered" name="date_entered" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="unit_name">Unit Name *</label>
+                        <input type="text" id="unit_name" name="unit_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="managed_by">Managed By</label>
+                        <input type="text" id="managed_by" name="managed_by">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address_office_hours">Address/Office Hours</label>
+                        <input type="text" id="address_office_hours" name="address_office_hours">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <select id="city" name="city">
+                            <option value="">Select City</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact">Contact Person</label>
+                        <input type="text" id="contact" name="contact">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone_no">Phone Number</label>
+                        <input type="tel" id="phone_no" name="phone_no">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bedrooms">Bedrooms</label>
+                        <select id="bedrooms" name="bedrooms">
+                            <option value="">Select Bedrooms</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bathrooms">Bathrooms</label>
+                        <select id="bathrooms" name="bathrooms">
+                            <option value="">Select Bathrooms</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rent">Rent</label>
+                        <input type="text" id="rent" name="rent">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deposit">Deposit</label>
+                        <input type="text" id="deposit" name="deposit">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="utilities_included">Utilities Included?</label>
+                        <select id="utilities_included" name="utilities_included">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cost_if_not_included">Cost if Not Included</label>
+                        <input type="text" id="cost_if_not_included" name="cost_if_not_included">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="move_in_specials">Move In Specials</label>
+                        <input type="text" id="move_in_specials" name="move_in_specials">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="availability_date">Availability Date</label>
+                        <input type="date" id="availability_date" name="availability_date">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requirements">Requirements</label>
+                        <textarea id="requirements" name="requirements" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="credit_score">Credit Score Required</label>
+                        <input type="text" id="credit_score" name="credit_score">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="background_check">Background Check</label>
+                        <select id="background_check" name="background_check">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accepts_programs">Accepts Programs</label>
+                        <select id="accepts_programs" name="accepts_programs">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pet_policy">Pet Policy</label>
+                        <textarea id="pet_policy" name="pet_policy" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rental_insurance">Rental Insurance Required/Cost</label>
+                        <input type="text" id="rental_insurance" name="rental_insurance">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="application_fee">Application Fee</label>
+                        <input type="text" id="application_fee" name="application_fee">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="website_link">Website/Link</label>
+                        <input type="url" id="website_link" name="website_link">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" name="notes" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="follow_up">Follow Up</label>
+                        <input type="text" id="follow_up" name="follow_up">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status">
+                            <option value="">Select Status</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="raise_rent_yearly">Raise Rent Yearly</label>
+                        <select id="raise_rent_yearly" name="raise_rent_yearly">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Save Contact</button>
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- List Tab -->
+        <div id="list-tab" class="tab-content">
+            <h2>Housing Contacts List</h2>
+            
+            <div class="filters">
+                <select id="filter-field">
+                    <option value="">Filter by...</option>
+                    <option value="city">City</option>
+                    <option value="status">Status</option>
+                    <option value="bedrooms">Bedrooms</option>
+                    <option value="managed_by">Managed By</option>
+                </select>
+                <input type="text" id="filter-value" placeholder="Filter value...">
+                <button onclick="applyFilter()" class="btn btn-primary">Apply Filter</button>
+                <button onclick="clearFilter()" class="btn btn-secondary">Clear</button>
+                
+                <select id="sort-field" onchange="sortTable()">
+                    <option value="">Sort by...</option>
+                    <option value="date_entered">Date Entered</option>
+                    <option value="unit_name">Unit Name</option>
+                    <option value="city">City</option>
+                    <option value="rent">Rent</option>
+                    <option value="availability_date">Availability Date</option>
+                </select>
+            </div>
+            
+            <div class="table-container">
+                <table id="contacts-table">
+                    <thead>
+                        <tr>
+                            <th>Date Entered</th>
+                            <th>Unit Name</th>
+                            <th>City</th>
+                            <th>Contact</th>
+                            <th>Phone</th>
+                            <th>Bedrooms</th>
+                            <th>Rent</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contacts-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Import Tab -->
+        <div id="import-tab" class="tab-content">
+            <h2>Import Data</h2>
+            <div class="import-section">
+                <p>To import your existing Excel data into the database:</p>
+                <ol>
+                    <li>Save your Excel file as CSV format</li>
+                    <li>Click the button below to import the sample data</li>
+                </ol>
+                <button onclick="importSampleData()" class="btn btn-primary">Import Sample Data</button>
+                <div id="import-status"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
