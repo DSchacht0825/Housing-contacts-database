@@ -165,6 +165,7 @@ app.delete('/api/contacts/:id', (req, res) => {
 
 // Get dropdown options
 app.get('/api/options', (req, res) => {
+  console.log('API options endpoint called');
   const options = {
     cities: [
       'Bonita', 'Bonsall', 'Borrego Springs', 'Carlsbad', 'Chula Vista', 
@@ -184,6 +185,7 @@ app.get('/api/options', (req, res) => {
     bedrooms: ['Studio', '1 bedroom', '2 bedrooms', '3 bedrooms', '4+ bedrooms', '1-2 bedrooms', '2-3 bedrooms', '1-3 bedrooms', 'Studio-1 bedroom', 'Studio-2 bedrooms', 'Varies'],
     bathrooms: ['1', '1.5', '2', '2.5', '3', '3+', '1-2', '1.5-2.5', 'Varies']
   };
+  console.log('Returning options:', Object.keys(options));
   res.json(options);
 });
 
