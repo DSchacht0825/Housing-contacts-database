@@ -115,11 +115,13 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
             clearForm();
             loadContacts();
         } else {
-            alert('Error saving contact');
+            const errorData = await response.json();
+            console.error('Server error:', errorData);
+            alert(`Error saving contact: ${errorData.error || 'Unknown error'}`);
         }
     } catch (error) {
-        console.error('Error:', error);
-        alert('Error saving contact');
+        console.error('Network/Client error:', error);
+        alert(`Error saving contact: ${error.message}`);
     }
 });
 

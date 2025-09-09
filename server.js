@@ -70,6 +70,7 @@ app.get('/api/contacts/:id', async (req, res) => {
 
 // Create new contact
 app.post('/api/contacts', async (req, res) => {
+  console.log('POST /api/contacts - Request body:', req.body);
   try {
     const fields = [
       'date_entered', 'unit_name', 'count1', 'managed_by', 'address_office_hours',
@@ -82,6 +83,7 @@ app.post('/api/contacts', async (req, res) => {
     ];
     
     const values = fields.map(field => req.body[field] || null);
+    console.log('Prepared values for insert:', values);
     
     let query;
     if (database.isPostgres()) {
@@ -92,7 +94,9 @@ app.post('/api/contacts', async (req, res) => {
       query = `INSERT INTO housing_contacts (${fields.join(', ')}) VALUES (${placeholders})`;
     }
     
+    console.log('Executing query:', query);
     const result = await database.query(query, values);
+    console.log('Query result:', result);
     
     if (database.isPostgres()) {
       res.json({ id: result[0].id, ...req.body });
@@ -100,8 +104,9 @@ app.post('/api/contacts', async (req, res) => {
       res.json({ id: result.lastID, ...req.body });
     }
   } catch (err) {
-    console.error('Error creating contact:', err);
-    res.status(500).json({ error: err.message });
+    console.error('Error creating contact - Full error:', err);
+    console.error('Error stack:', err.stack);
+    res.status(500).json({ error: err.message, details: err.toString() });
   }
 });
 
