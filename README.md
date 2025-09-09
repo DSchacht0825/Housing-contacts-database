@@ -126,4 +126,4 @@ housing-contacts/
 - Bulk data import from CSV
 - Email integration
 - Calendar integration for follow-ups
-- Photo attachments for properties
+- Photo attachments for properties# Deployment trigger Mon Sep  8 19:47:18 PDT 2025
