@@ -6,9 +6,10 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5;
+    background: linear-gradient(135deg, #2c5282 0%, #2a4365 100%);
     color: #333;
     line-height: 1.6;
+    min-height: 100vh;
 }
 
 .container {
@@ -19,31 +20,62 @@ body {
 
 /* Header with logo */
 .header {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 30px;
     padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-    max-width: 250px;
-    height: auto;
-    margin-bottom: 20px;
+    height: 50px;
+    width: auto;
 }
 
-h1 {
-    color: #004c97;
-    margin: 10px 0;
+.header-text {
+    flex: 1;
     text-align: center;
+    margin: 0 20px;
+}
+
+.header-text h1 {
+    color: #2c5282;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 .tagline {
-    color: #666;
+    color: #4a5568;
     font-size: 14px;
-    margin: 5px 0;
-    font-style: italic;
+    margin: 5px 0 0 0;
+    font-weight: 500;
+}
+
+.home-button {
+    background: #2c5282;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(44, 82, 130, 0.2);
+}
+
+.home-button:hover {
+    background: #2a4365;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(44, 82, 130, 0.3);
+    text-decoration: none;
+    color: white;
 }
 
 h2 {
